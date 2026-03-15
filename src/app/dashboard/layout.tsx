@@ -1,27 +1,25 @@
-"use client"
+import { createClient } from "@/utils/supabase/server"
+import { DashboardShell } from "@/components/dashboard/dashboard-shell"
 
-import { useState } from "react"
-import { AppSidebar } from "@/components/dashboard/app-sidebar"
-import { TopNav } from "@/components/dashboard/top-nav"
-import { GlobalChatAssistant } from "@/components/chat/global-chat-assistant"
+export const dynamic = 'force-dynamic'
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const userData = user ? {
+    avatar_url: user.user_metadata.avatar_url,
+    full_name: user.user_metadata.full_name,
+    email: user.email
+  } : null
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
-      <AppSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      <div className="flex-1 flex flex-col min-w-0 relative">
-        <TopNav onMenuClick={() => setIsSidebarOpen(true)} />
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
-          {children}
-        </main>
-        <GlobalChatAssistant />
-      </div>
-    </div>
+    <DashboardShell user={userData}>
+      {children}
+    </DashboardShell>
   )
 }
