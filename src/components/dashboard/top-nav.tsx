@@ -1,14 +1,22 @@
-import { Search, Bell } from "lucide-react"
+import { Search, Bell, Menu } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/utils/supabase/server"
 
-export async function TopNav() {
+export async function TopNav({ onMenuClick }: { onMenuClick?: () => void }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
     <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-x-4 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-4 sm:px-6 backdrop-blur">
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        className="md:hidden text-slate-500"
+        onClick={onMenuClick}
+      >
+        <Menu className="h-6 w-6" />
+      </Button>
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <form className="relative flex flex-1" action="#" method="GET">
           <label htmlFor="search-field" className="sr-only">

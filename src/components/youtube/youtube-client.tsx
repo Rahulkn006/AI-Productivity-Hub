@@ -163,9 +163,20 @@ export function YouTubeClient({ initialSummaries }: { initialSummaries: any[] })
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-4">
-                      <h1 className="text-xl font-bold leading-tight mb-2 text-slate-900 dark:text-white">
-                        {selectedSummary.video_title}
-                      </h1>
+                      <div className="space-y-1">
+                        <h1 className="text-xl font-bold leading-tight text-slate-900 dark:text-white">
+                          {selectedSummary.video_title}
+                        </h1>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+                            selectedSummary.transcript?.length > 1000 
+                              ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
+                              : "bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
+                          }`}>
+                            {selectedSummary.transcript?.length > 1000 ? "Full Transcript" : "Metadata Overview"}
+                          </span>
+                        </div>
+                      </div>
                       <Button variant="ghost" size="icon" className="shrink-0 text-slate-400 hover:text-red-500 transition-colors" onClick={(e) => handleDelete(selectedSummary.id, e)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>

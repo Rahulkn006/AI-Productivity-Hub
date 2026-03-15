@@ -31,16 +31,19 @@ export async function POST(req: Request) {
     // 2. Get metadata
     const metadata = await getYoutubeMetadata(videoId)
 
-    // 3. Fetch transcript
+    // 3. Fetch transcript (with metadata fallback)
     let fullTranscript: string
+    let isMetadataFallback = false
     try {
       fullTranscript = await getTranscript(videoId)
     } catch (e: any) {
-      return NextResponse.json({ error: e.message }, { status: 400 })
+      console.warn(`[API] Transcript failed, falling back to description: ${e.message}`)
+      isMetadataFallback = true
+      fullTranscript = metadata.description || ""
     }
 
-    if (!fullTranscript) {
-      return NextResponse.json({ error: 'This video does not provide captions, so it cannot be summarized.' }, { status: 400 })
+    if (!fullTranscript || fullTranscript.length < 20) {
+      return NextResponse.json({ error: 'Neither a transcript nor a video description is available for this video.' }, { status: 400 })
     }
 
     // 4. Chunk transcript for long videos
