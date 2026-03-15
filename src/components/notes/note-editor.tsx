@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Trash2, Save, Sparkles, RefreshCw, ChevronDown, ChevronRight } from "lucide-react"
+import { Trash2, Save, Sparkles, RefreshCw, ChevronDown, ChevronRight, ChevronLeft } from "lucide-react"
 import { updateNote, deleteNote } from "@/app/actions/notes"
 import { toast } from "sonner"
 
@@ -64,7 +64,7 @@ function AiSection({ title, content, isLoading, onRegenerate }: AiSectionProps) 
   )
 }
 
-export function NoteEditor({ note, onUpdated, onDeleted }: { note: any, onUpdated: () => void, onDeleted: () => void }) {
+export function NoteEditor({ note, onUpdated, onDeleted, onBack }: { note: any, onUpdated: () => void, onDeleted: () => void, onBack?: () => void }) {
   const [title, setTitle] = useState(note?.title || "")
   const [content, setContent] = useState(note?.content || "")
   const [isEditing, setIsEditing] = useState(false)
@@ -159,8 +159,18 @@ export function NoteEditor({ note, onUpdated, onDeleted }: { note: any, onUpdate
 
   return (
     <div className="flex-1 flex flex-col h-full bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex-1 mr-4">
+      <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 gap-2">
+        {onBack && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="sm:hidden h-9 w-9 -ml-2" 
+            onClick={onBack}
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </Button>
+        )}
+        <div className="flex-1 min-w-0">
           {isEditing ? (
             <Input value={title} onChange={(e) => setTitle(e.target.value)} className="font-bold text-lg border-none focus-visible:ring-0 px-0 h-auto" placeholder="Note Title" />
           ) : (

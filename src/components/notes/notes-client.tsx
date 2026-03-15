@@ -38,9 +38,12 @@ export function NotesClient({ initialNotes, initialFolders }: { initialNotes: an
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] gap-6">
-      {/* Sidebar */}
-      <div className="w-72 flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
+    <div className="flex h-[calc(100vh-8rem)] flex-col sm:flex-row gap-4 sm:gap-6">
+      {/* Sidebar - Hidden on mobile if a note is selected */}
+      <div className={cn(
+        "w-full sm:w-72 flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 transition-all duration-300",
+        selectedNoteId ? "hidden sm:flex" : "flex"
+      )}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-lg">My Notes</h2>
           <Button size="icon" variant="ghost" className="h-8 w-8 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/20" onClick={handleCreateNote}>
@@ -82,12 +85,18 @@ export function NotesClient({ initialNotes, initialFolders }: { initialNotes: an
         </ScrollArea>
       </div>
 
-      {/* Main Editor Area */}
-      <NoteEditor 
-        note={selectedNote} 
-        onUpdated={refreshFiles} 
-        onDeleted={refreshFiles} 
-      />
+      {/* Main Editor Area - Visible only when note is selected on mobile */}
+      <div className={cn(
+        "flex-1 h-full",
+        !selectedNoteId && "hidden sm:block"
+      )}>
+        <NoteEditor 
+          note={selectedNote} 
+          onUpdated={refreshFiles} 
+          onDeleted={refreshFiles} 
+          onBack={() => setSelectedNoteId(null)}
+        />
+      </div>
     </div>
   )
 }
