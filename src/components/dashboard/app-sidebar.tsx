@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { 
@@ -41,9 +42,19 @@ export function AppSidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: ()
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="flex h-16 shrink-0 items-center px-6 border-b border-slate-200 dark:border-slate-800">
-          <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-            ProductivityHub
-          </h2>
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <div className="relative w-8 h-8 overflow-hidden rounded-lg shadow-md shadow-indigo-500/10">
+              <Image
+                src="/logo.png"
+                alt="AI Productivity Hub Logo"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+              ProductivityHub
+            </h2>
+          </Link>
         </div>
         <nav className="flex-1 overflow-y-auto py-4">
           <ul className="grid gap-1 px-4">
