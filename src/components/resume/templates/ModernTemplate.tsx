@@ -3,7 +3,7 @@ import { Mail, Phone, Linkedin, Globe, MapPin } from "lucide-react";
 
 export function ModernTemplate({ data }: { data: ResumeDetails }) {
   return (
-    <div className="p-12 text-[#1e293b] bg-white min-h-[1120px] font-sans">
+    <div className="p-10 text-[#1e293b] bg-white min-h-[1120px] font-sans">
       {/* Header Section */}
       <header className="mb-10 flex justify-between items-start gap-10">
         <div className="flex-1">
@@ -34,8 +34,8 @@ export function ModernTemplate({ data }: { data: ResumeDetails }) {
       </header>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-12 gap-12">
-        <div className="col-span-8 space-y-10">
+      <div className="grid grid-cols-3 gap-8">
+        <div className="col-span-2 space-y-10">
           {/* Summary */}
           {data.summary && (
             <section>
@@ -88,7 +88,7 @@ export function ModernTemplate({ data }: { data: ResumeDetails }) {
         </div>
 
         {/* Sidebar */}
-        <div className="col-span-4 space-y-10">
+        <div className="col-span-1 space-y-10">
           {data.skills && data.skills.length > 0 && (
             <section>
               <h2 className="text-[10px] font-black uppercase text-[#0f172a] mb-6 tracking-[0.2em] border-b-2 border-[#0f172a] block pb-1">Stack</h2>

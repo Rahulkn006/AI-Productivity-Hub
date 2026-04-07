@@ -65,6 +65,7 @@ export function ProjectsForm() {
                   onChange={(e) => handleChange(index, "name", e.target.value)}
                   placeholder="e.g. AI SaaS Platform"
                   className="h-10 text-xs font-bold"
+                  autoComplete="off"
                 />
               </div>
               <div className="space-y-2">
@@ -76,6 +77,7 @@ export function ProjectsForm() {
                       onChange={(e) => handleChange(index, "link", e.target.value)}
                       placeholder="github.com/..."
                       className="h-10 pl-9 text-xs"
+                      autoComplete="off"
                    />
                 </div>
               </div>
@@ -88,6 +90,7 @@ export function ProjectsForm() {
                 onChange={(e) => handleTechChange(index, e.target.value)}
                 placeholder="React, Next.js, Supabase"
                 className="h-10 text-xs font-medium"
+                autoComplete="off"
               />
             </div>
 
